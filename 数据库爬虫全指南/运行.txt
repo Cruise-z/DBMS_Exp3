@@ -1,4 +1,0 @@
-1.
-（1）：若未添加redis数据库的环境变量，则打开安装的redis数据库下的bin路径里的redis-server.exe，从而使得redis数据库服务打开；
-（2）：若已添加redis数据库的环境变量，在windows的Terminal中输入redis-server.exe并回车即可！
-2.运行工程包里的getdata.py脚本即可！
