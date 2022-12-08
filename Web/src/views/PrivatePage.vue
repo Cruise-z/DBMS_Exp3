@@ -83,7 +83,7 @@
         <!-- 修改信息 -->
         <div class="card change_card">
             <h3>修改信息</h3>
-            <el-tabs v-model="activeName" @tab-click="handleClick">
+            <el-tabs @tab-click="reset_info">
                 <!-- 修改基本资料 -->
                 <el-tab-pane label="基本资料" name="first">
                     <el-form :model="form" label-width="120px">
@@ -138,9 +138,9 @@
 </template>
 
 <script>
-import request from '@/utils/request'
 import Header from '@/components/Header.vue'
 import reading from '../assets/reading.jpeg'
+import request from '@/utils/request'
 import { ref } from 'vue'
 import {
     Plus,
@@ -180,7 +180,7 @@ export default {
         var validatePass2 = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请再次输入密码'));
-            } else if (value !== this.passForm.pass) {
+            } else if (value !== this.passForm.newPass) {
                 callback(new Error('两次输入密码不一致!'));
             } else {
                 callback();
@@ -197,12 +197,12 @@ export default {
             imageUrl: reading,
             head: [{ name: 'default', url: reading }],
             privateInfo: {
-                username: "张三",
-                userID: "0001",
-                telephone: "13000000000",
-                email: "email@gail.com",
-                city: "北京",
-                authType: "管理员",
+                username: "请输入用户名",
+                userID: "",
+                telephone: "",
+                email: "",
+                city: "",
+                authType: "",
                 sex: "女",
             },
             activeName: ref('first'),
@@ -228,8 +228,7 @@ export default {
         }
     },
     created() {
-        // this.load();
-        this.reset_info()
+        this.load();
     },
     methods: {
         load: function () {
@@ -237,15 +236,16 @@ export default {
             }).then(
                 res => {
                     console.log(res);
-                    this.privateInfo.username = res.info.username;
+                    this.privateInfo.username = res.info.name;
                     this.privateInfo.userID = res.info.ID;
                     this.privateInfo.email = res.info.email;
                     this.privateInfo.city = res.info.city;
-                    this.privateInfo.authType = res.info.authType;
+                    this.privateInfo.authType = (res.info.authType==1?"管理员":"普通用户");
                     this.privateInfo.sex = res.info.sex;
                     this.privateInfo.telephone = res.info.telephone
                 }
             );
+            this.reset_info();
         },
         submit_info: function () {
             request.post("/bookweb/updateInfo", {

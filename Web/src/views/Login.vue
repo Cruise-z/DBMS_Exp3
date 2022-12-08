@@ -179,11 +179,12 @@ import request from '@/utils/request'
                 }else{
                     request.post("/bookweb/register",this.RegisterForm).then(
                         res => {
-                            if(res.data.status_code == 401){
+                            console.log(res);
+                            if(res.status_code == 401){
                                 alert("该用户已存在");
-                            }else if(res.data.status_code == 404){
+                            }else if(res.status_code == 404){
                                 alert("密码非法");
-                            }else if(res.data.status_code == 200){
+                            }else if(res.status_code == 200){
                                 alert("注册成功,你可以登录啦！");
                             }
                         }

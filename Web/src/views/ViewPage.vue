@@ -429,7 +429,7 @@ export default{
         );
       },
       RemarkconfirmDelete : function(name,time){
-        request.post("bookweb.deleteComment",{
+        request.post("bookweb/deleteComment",{
           ISBN : this.RemarkShowing.ISBN,
           username : name,
           timeStamp : time

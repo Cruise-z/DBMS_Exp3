@@ -233,7 +233,7 @@ def updateInfo(request):
         city = data['city']
         sex = data['sex']
         userid = request.session['userId']
-        user = Users.objects.get(id=userid)
+        user = Users.objects.get(Id=userid)
         user.Name = new_name
         user.Telephone = telephone
         user.Email = email
@@ -246,6 +246,7 @@ def updateInfo(request):
         return JsonResponse({'status_code': 200, 'msg': "修改成功"})
 
 
+
 @csrf_exempt
 def updatePassword(request):
     if request.method == 'POST':
@@ -255,7 +256,7 @@ def updatePassword(request):
         originPass = data['originPass']
         newPass = data['newPass']
         userid = request.session['userId']
-        user = Users.objects.get(id=userid)
+        user = Users.objects.get(Id=userid)
         maxlength = 20
         if user.Password == originPass:
             if len(newPass) < maxlength:
@@ -294,7 +295,7 @@ def deleteComment(request):
         isbn = data['ISBN']
         username = data['username']
         user = Users.objects.get(Name=username)
-        remark = BookComments.objects.get(ISBN=isbn, User_id=user.Id)
+        remark = BookComments.objects.get(ISBN=isbn, User_id=user)
         adminid = request.session['userId']
         admin = Users.objects.get(Id=adminid)
         if admin.Authtype == 0:
